@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<!-- ヘッダ -->
+<head>
+  <meta charset="UTF-8">
+  <title>TODO リスト</title>
+</head>
+
+<!-- ボディ -->
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+  <h1>{{h1_title}}</h1>
+  <h2>簡単なTODOリストを作ろう！</h2>
+  <h3>お品書き</h3>
+  <ol>
+    <li>v-textを使ってページタイトルを表示しよう</li>
+    <li>v-forを使ってあらかじめ設定したtodoを画面に表示しよう</li>
+    <li>v-modelを使ってtodoの入力欄となるinputを追加しよう</li>
+    <li>v-onとmethodsを使ってtodoを追加しよう</li>
+    <li>v-if/v-show/v-elseを使って、条件に応じた表示をさせよう</li>
+    <li>computedを使って今登録されているtodoの合計を表示しよう</li>
+    <li>削除ボタンを追加してtodoリストからtodoを削除してみよう</li>
+  </ol>
+
+  <h3>実際に作ってみよう！</h3>
+  <p>現在登録されているTODOの数 {{total}}個</p>
+  <ul>
+    <li v-for="(todo, index) in todos">
+      <span v-if="todo.id == 'example'">例)</span>
+      <span v-else>{{todo.id}}:</span>
+      {{todo.title}}
+      <span v-if="todo.id != 'example'">
+        <button v-on:click="remove(todo.id)">削除</button>
+      </span>
+    </li>
+  </ul>
+
+  <p>新たなTODOを追加してください</p>
+  <input v-model="new_item" v-on:keyup.enter="add">
+  <button v-on:click="add">追加</button>
+  <p>追加する内容:{{new_item}}</span></p>
+</div>
+
+<!-- vuejsのコード -->
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      h1_title: 'TODOリスト',
+      new_item: '',
+      todos: [
+        {
+          id: 'example',
+          title: '洗濯物をたたむ'
+        }
+      ]
+    },
+    computed: {
+      total: function() {
+        return this.todos.length - 1
+      }
+    },
+    methods: {
+      add: function () {
+        const item = {
+          id: this.todos.length,
+          title: this.new_item
+        }
+        this.todos.push(item)
+        this.new_item = ''
+      },
+      remove: function (id) {
+        const index = this.todos.findIndex(todo => todo.id === id)
+        this.todos.splice(index, 1)
+      }
+    }
+  })
+</script>
+</body>
+</html>
