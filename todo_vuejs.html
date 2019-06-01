@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>タイトルを入れました</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+    <div id="app">
+        <h1 class="display-1" v-text="h1_title"></h1>
+        <p>{{description}}</p>
+        <ul>
+            <li v-for="todo in todo_list">{{todo}}</li>
+        </ul>
+        <input v-model="input_text">
+        <button v-on:click="add_todo">追加</button>
+        <p>{{count()}}</p>
+        <select>
+            <option v-for="option in options">
+                {{ option }}
+            </option>
+        </select>
+
+        <div v-if="input_text == '表示'">
+            <p>「表示」を入力しています</p>
+            <p>{{input_text}}</p>
+        </div>
+        <div v-else>
+            <p>「表示」以外を入力しています</p>
+        </div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                h1_title: 'NEW TODOリスト',
+                description: 'リード文を足すよ',
+                todo_list: ['例のTODO', '洗濯する'],
+                input_text: '',
+                selected: 'A',
+                options: ['1', '2']
+            },
+            methods: {
+                add_todo: function () {
+                    alert('ボタンを押しました。')
+                },
+                count: function () {
+                    return this.input_text.length
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
