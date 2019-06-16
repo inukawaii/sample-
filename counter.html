@@ -6,7 +6,7 @@
 
 <body>
 <div id="app">
-  <button-counter v-for="i in list"></button-counter>
+  <button-counter v-for="item in list" v-bind:hogehoge="item"></button-counter>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script>
@@ -16,18 +16,33 @@
         count: 0
       }
     },
+    props: { 
+      hogehoge: {
+        type: String,
+        default: 'default'
+      }
+    },
+    computed: {
+      is_over_5: function() {
+        if (this.count > 5) {
+          return 'red'
+        } else {
+          return 'black'
+        }
+      }
+    },
     methods: {
       button_click: function() {
         ++this.count;
       }
     },
 
-    template: '<button v-on:click="button_click">You clicked me {{ count }} times.</button>'
+    template: '<button v-on:click="button_click" v-bind:style="{color: is_over_5} ">You clicked {{hogehoge}} {{ count }} times.</button>'
   })
   const vm = new Vue({
     el: '#app',
     data: {
-      list: [0, 1, 2]
+      list: ['最初', 　'2番目', 　'3番目']
     }
   })
 
